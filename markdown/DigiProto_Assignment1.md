@@ -39,6 +39,8 @@
 # Difficulties 
 
 1. Sedan car asset had texture troubles, not using that asset anymore in favour of a more low-poly asset
+2. Texture troubles turned out to be a result of the scene, therefore new scene has been made and track will  
+	be assembled from scratch
 
 
 # Final Documentation Goals
