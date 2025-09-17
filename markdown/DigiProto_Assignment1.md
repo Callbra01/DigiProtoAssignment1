@@ -36,6 +36,11 @@
 > 5. 
 > 6. 
 
+# Difficulties 
+
+1. Sedan car asset had texture troubles, not using that asset anymore in favour of a more low-poly asset
+
+
 # Final Documentation Goals
 
 1. **Define the desired game mechanic or feature**.
