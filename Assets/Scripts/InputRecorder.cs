@@ -9,6 +9,7 @@ using UnityEngine;
 public class InputRecorder : MonoBehaviour
 {
     public static InputRecorder instance { get; private set; }
+    static string frameDataFolder = "FrameData";
 
     int currentFrame = 0;
     bool isRecording = true;
@@ -52,6 +53,7 @@ public class InputRecorder : MonoBehaviour
         // This is for dev manipulation
         // KeyCode.P = stop recording, starts with scene start - TO BE REFACTORED FOR LAP START
         // KeyCode.LeftBracket = Loads frames to list for playback 
+        /*
         if (Input.GetKeyDown(KeyCode.P))
         {
             isRecording = false;
@@ -62,6 +64,14 @@ public class InputRecorder : MonoBehaviour
         {
             loadedFrames = LoadDataFromFile();
         }
+        */
+    }
+
+    public void StopRecording()
+    {
+        isRecording = false;
+        SaveDataToFile();
+        loadedFrames = LoadDataFromFile();
     }
 
     private void RecordFrames(int frame)
@@ -102,7 +112,7 @@ public class InputRecorder : MonoBehaviour
     private void SaveDataTestFunc(string mod, int caseIndex)
     {
         // Create streamwriter
-        StreamWriter streamWriter = new StreamWriter(Application.dataPath + $"/frameData{mod}{caseIndex}.txt");
+        StreamWriter streamWriter = new StreamWriter(Application.dataPath + $"/{frameDataFolder}/ frameData{mod}{caseIndex}.txt");
 
         // Guard statement incase case index is invalid
         if (caseIndex < 0 || caseIndex > 7)
@@ -160,12 +170,14 @@ public class InputRecorder : MonoBehaviour
 
     private float[] LoadDataTestFunc(string mod, int caseIndex)
     {
-        StreamReader streamReader = new StreamReader(Application.dataPath + $"/frameData{mod}{caseIndex}.txt");
+        // Create streamreader at datapath for a given value
+        StreamReader streamReader = new StreamReader(Application.dataPath + $"/{frameDataFolder}/frameData{mod}{caseIndex}.txt");
 
+        // Split data by '_' seperator, create temp array for floats
         string[] tempInputStringArray = streamReader.ReadToEnd().Split('_');
         float[] tempFloatArray = new float[tempInputStringArray.Length];
-        int[] tempIntArray = new int[tempInputStringArray.Length];
 
+        // Loop through values, parse float from string data in file
         for (int index = 0; index < tempFloatArray.Length; index++)
         {
             float currentVal;
@@ -184,6 +196,7 @@ public class InputRecorder : MonoBehaviour
     private List<DataFrame> LoadDataFromFile()
     {
         // Load individual arrays with num/pos/rot data
+        // This is also very nasty 
         float[] dataFrameNumbers = LoadDataTestFunc("NUM", 0);
         float[] dataFramePOSX = LoadDataTestFunc("POS", 1);
         float[] dataFramePOSY = LoadDataTestFunc("POS", 2);
