@@ -17,7 +17,7 @@
 # Team Roles
 > Dan: Unity working, 
 > Evan: Unity working, 3DS Max asset creation/source
-> Noah: Non-code writing, Sound asset creation/source
+> Noah: Non-code writing, LFS and release managment
 > Brandon: Code oversight/Management, commentator video
 
 ### First Meeting Notes
