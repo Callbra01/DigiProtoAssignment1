@@ -8,6 +8,8 @@ using UnityEngine;
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ HARD PART
 public class GhostCar : MonoBehaviour
 {
+    public static GhostCar instance { get; private set; }
+
     // Frame Data list
     List<DataFrame> frameDataList = new List<DataFrame>();
 
@@ -19,12 +21,27 @@ public class GhostCar : MonoBehaviour
     int interval = 6;
     int currentFrame = 0;
 
+    bool isAttacking = false;
+
+    private void Awake()
+    {
+        // Create instance if instance doesnt exist
+        // Else replace instance with this
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     // Set interval to InputRecorders interval
     void Start()
     {
         interval = InputRecorder.instance.interval;
     }
-
 
     void Update()
     {
@@ -46,9 +63,11 @@ public class GhostCar : MonoBehaviour
     void IntervalUpdate()
     {
         // Prevent index error
-        if (currentFrame > frameDataList.Count -1)
+        if (currentFrame < frameDataList.Count)
         {
-            currentFrame = frameDataList.Count -1;
+            // Update pos/rot data for ghost car
+            transform.position = frameDataList[currentFrame].position;
+            transform.rotation = frameDataList[currentFrame].rotation;
         }
 
         // Every interval frame, update currentFrame to change pos/rot data for ghost car
@@ -58,9 +77,13 @@ public class GhostCar : MonoBehaviour
             currentFrame++;
         }
         timer++;
+    }
 
-        // Update pos/rot data for ghost car
-        transform.position = frameDataList[currentFrame].position;
-        transform.rotation = frameDataList[currentFrame].rotation;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "LapStart")
+        {
+            // Stop recording
+        }
     }
 }
