@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     InputRecorder recorderInstance;
     GhostCar ghostCarInstance;
 
+    GameObject playerObject;
 
     void Start()
     {
@@ -18,6 +19,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        ghostCarInstance.ReceivePlayerData(playerObject);
     }
 }

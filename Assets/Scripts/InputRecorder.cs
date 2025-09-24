@@ -53,7 +53,7 @@ public class InputRecorder : MonoBehaviour
         // This is for dev manipulation
         // KeyCode.P = stop recording, starts with scene start - TO BE REFACTORED FOR LAP START
         // KeyCode.LeftBracket = Loads frames to list for playback 
-        /*
+        //*
         if (Input.GetKeyDown(KeyCode.P))
         {
             isRecording = false;
@@ -64,7 +64,7 @@ public class InputRecorder : MonoBehaviour
         {
             loadedFrames = LoadDataFromFile();
         }
-        */
+        //*/
     }
 
     public void StopRecording()

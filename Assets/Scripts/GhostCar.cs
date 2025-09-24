@@ -21,7 +21,9 @@ public class GhostCar : MonoBehaviour
     int interval = 6;
     int currentFrame = 0;
 
-    bool isAttacking = false;
+    public bool isAttacking = false;
+
+    Vector3 playerPosition = new Vector3();
 
     private void Awake()
     {
@@ -60,8 +62,19 @@ public class GhostCar : MonoBehaviour
         }
     }
 
+    public void ReceivePlayerData(GameObject gObj)
+    {
+        playerPosition = gObj.transform.position;
+    }
+
     void IntervalUpdate()
     {
+        if (isAttacking)
+        {
+            transform.position = Vector3.Lerp(playerPosition, transform.position, 0.5f * Time.deltaTime);
+            return;
+        }
+
         // Prevent index error
         if (currentFrame < frameDataList.Count)
         {
