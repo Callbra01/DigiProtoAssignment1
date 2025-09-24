@@ -28,19 +28,17 @@
 > 5. Designer commentator video, 5 minutes max
 > 6. Keep markdown stuff in the root folder
 
-### Second Meeting Notes
-> 1. 
-> 2. 
-> 3. 
-> 4. 
-> 5. 
-> 6. 
-
 # Difficulties 
 
+### Asset Difficulties
 1. Sedan car asset had texture troubles, not using that asset anymore in favour of a more low-poly asset
 2. Texture troubles turned out to be a result of the scene, therefore new scene has been made and track will  
 	be assembled from scratch
+
+### Technical Difficulties
+1. Original plan to record player inputs and play back from file to move ghost car is too complex for the project. This has been resolved by storing position and rotation data for the player car in text files for ease of readability/modification
+2. Data storage for 8 different variables (Pos x, y, z. Rot x, y, z, w. Frame number) made parsing from a single text file difficult. This was resolved by, disgustingly and regrettably, saving each variable to its own text file and doing a single parse for each.
+3. Modification of ghost car pathing was hard to visualize. This was ammended by creating a path renderer for ease of development.
 
 
 # Final Documentation Goals
