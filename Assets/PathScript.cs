@@ -31,25 +31,24 @@ public class PathScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
+    // Get LineRenderer component
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // If pathhelper is triggered (specifically after current lap frames have been save to file)
+        // load inputRecorder loaded frames, and populate private frame position array
         if (isLoaded)
         {
             frameDataList = InputRecorder.instance.loadedFrames;
 
             PopulateFramePositions();
-
-
         }
 
+        // When private frame position array is populated, and valid, set positions for line renderer ONCE
         if (areFramesPopulated  && !isLineDrawn && framePositions.Count > 2)
         {
             for (int i = 0; i < framePositions.Count; i ++)
@@ -61,21 +60,22 @@ public class PathScript : MonoBehaviour
         }
     }
 
+    // Populate private frame position array
     void PopulateFramePositions()
     {
+        // If frames are populated, return from func
         if (areFramesPopulated)
         {
             return;
         }
 
-
+        // If frames are not populated, loop through and visualize every 1 second of frame data, for brevity
         for (int i = 0; i < frameDataList.Count; i += 6)
         {
-            //if (i >= frameDataList.Count) break;
-
             framePositions.Add(frameDataList[i].position);
         }
 
+        // Set lineRenderer position count to the amount of frames we have, and disable this func
         lineRenderer.positionCount = framePositions.Count;
         areFramesPopulated = true;
     }
