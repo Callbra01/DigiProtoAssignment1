@@ -21,8 +21,6 @@ public class GhostCar : MonoBehaviour
     int interval = 6;
     int currentFrame = 0;
 
-    public bool isAttacking = false;
-
     Vector3 playerPosition = new Vector3();
 
     private void Awake()
@@ -47,6 +45,7 @@ public class GhostCar : MonoBehaviour
 
     void Update()
     {
+
         // Load frame data, start timer if bool is checked - TODO: TOGGLE "hasStarted" WHEN PLAYER COMPLETES A LAP
         if (hasStarted)
         {
@@ -60,6 +59,7 @@ public class GhostCar : MonoBehaviour
         {
             IntervalUpdate();
         }
+        //Debug.Log($"{playerPosition.x}, {playerPosition.y}");
     }
 
     public void ReceivePlayerData(GameObject gObj)
@@ -69,11 +69,6 @@ public class GhostCar : MonoBehaviour
 
     void IntervalUpdate()
     {
-        if (isAttacking)
-        {
-            transform.position = Vector3.Lerp(playerPosition, transform.position, 0.5f * Time.deltaTime);
-            return;
-        }
 
         // Prevent index error
         if (currentFrame < frameDataList.Count)

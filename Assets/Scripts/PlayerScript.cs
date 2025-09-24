@@ -5,30 +5,33 @@ using UnityEngine;
 // NOT NEEDED, REMOVE NEXT COMMIT
 public class PlayerScript : MonoBehaviour
 {
-    private Rigidbody rb;
 
-    private float currentSpeed;
-    public float topSpeed;
-
-    private float h;
-    private float v;
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        gameManager = GameManager.instance;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+
+    private void OnTriggerEnter(Collider other)
     {
-        pInput();
+        if (other.gameObject.tag == "LapTrigger")
+        {
+            Debug.Log("LAPPED");
+            gameManager.isLapTriggerBlocked = false;
+        }
     }
 
-    private void pInput()
+    private void OnTriggerExit(Collider other)
     {
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
-
+        if (other.gameObject.tag == "LapTrigger")
+        {
+            Debug.Log("ACTIVATE BLOCK");
+            gameManager.isLapTriggerBlocked = true;
+            gameManager.recorderInstance.TriggerProc();
+            gameManager.TriggerPathHelper();
+        }
     }
 }

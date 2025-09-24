@@ -54,17 +54,19 @@ public class InputRecorder : MonoBehaviour
         // KeyCode.P = stop recording, starts with scene start - TO BE REFACTORED FOR LAP START
         // KeyCode.LeftBracket = Loads frames to list for playback 
         //*
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && isRecording)
         {
-            isRecording = false;
-            SaveDataToFile();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftBracket))
-        {
-            loadedFrames = LoadDataFromFile();
+            StopRecording();
         }
         //*/
+    }
+
+    public void TriggerProc()
+    {
+        if (isRecording)
+        {
+            StopRecording();
+        }
     }
 
     public void StopRecording()
@@ -111,8 +113,10 @@ public class InputRecorder : MonoBehaviour
     // this is gonna be how it is -brandon
     private void SaveDataTestFunc(string mod, int caseIndex)
     {
+        File.WriteAllText(Application.dataPath + $"/{frameDataFolder}/frameData{mod}{caseIndex}.txt", string.Empty);
+
         // Create streamwriter
-        StreamWriter streamWriter = new StreamWriter(Application.dataPath + $"/{frameDataFolder}/ frameData{mod}{caseIndex}.txt");
+        StreamWriter streamWriter = new StreamWriter(Application.dataPath + $"/{frameDataFolder}/frameData{mod}{caseIndex}.txt");
 
         // Guard statement incase case index is invalid
         if (caseIndex < 0 || caseIndex > 7)
@@ -175,7 +179,7 @@ public class InputRecorder : MonoBehaviour
 
         // Split data by '_' seperator, create temp array for floats
         string[] tempInputStringArray = streamReader.ReadToEnd().Split('_');
-        float[] tempFloatArray = new float[tempInputStringArray.Length];
+        float[] tempFloatArray = new float[tempInputStringArray.Length -1];
 
         // Loop through values, parse float from string data in file
         for (int index = 0; index < tempFloatArray.Length; index++)
