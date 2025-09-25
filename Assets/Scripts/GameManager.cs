@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public bool isLapTriggerBlocked = true;
 
+    int currentLap = 0;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        currentLap = 0; 
+
         recorderInstance = InputRecorder.instance;
         ghostCarInstance = GhostCar.instance;
         playerScript = playerObject.GetComponent<PlayerScript>();
@@ -47,5 +51,37 @@ public class GameManager : MonoBehaviour
     public void TriggerPathHelper()
     {
         pathHelper.isLoaded = true;
+    }
+
+    public void ResetPathHelper()
+    {
+        pathHelper.ResetPath();
+    }
+
+    // Called by player script when player crosses lap trigger
+    public void LapTriggerFunction()
+    {
+        if (currentLap == 0)
+        {
+            isLapTriggerBlocked = true;
+            recorderInstance.TriggerProc();
+            TriggerPathHelper();
+            ghostCarInstance.hasStarted = true;
+            currentLap++;
+            return;
+        }
+        else
+        {
+            ResetLap();
+        }
+
+        
+
+    }
+
+    public void ResetLap()
+    {
+        recorderInstance.RestartRecording();
+        ResetPathHelper();
     }
 }

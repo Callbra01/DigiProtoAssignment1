@@ -13,13 +13,15 @@ public class InputRecorder : MonoBehaviour
 
     int currentFrame = 0;
     bool isRecording = true;
-    bool isPlaying = false;
 
     List<DataFrame> frameDataList = new List<DataFrame>();
     public List<DataFrame> loadedFrames = new List<DataFrame>();
 
     int timer = 0;
     public int interval = 6;
+
+    bool currentFileToggle = false;
+    int filePrefix = 0;
 
     private void Awake()
     {
@@ -43,6 +45,15 @@ public class InputRecorder : MonoBehaviour
 
     private void Update()
     {
+        if (!currentFileToggle)
+        {
+            filePrefix = 0;
+        }
+        else
+        {
+            filePrefix = 1;
+        }
+
         // Every 6 frames, record frame data, update timer every frame
         if (timer%interval == 0)
         {
@@ -73,13 +84,25 @@ public class InputRecorder : MonoBehaviour
     {
         isRecording = false;
         SaveDataToFile();
+        loadedFrames.Clear();
         loadedFrames = LoadDataFromFile();
+    }
+
+    public void RestartRecording()
+    {
+        ToggleFileSwap();
+        frameDataList.Clear();
+        //loadedFrames.Clear();
+
+        timer = 0;
+        currentFrame = 0;
+        isRecording = true;
     }
 
     private void RecordFrames(int frame)
     {
         // If not recording, or playing back an existing recording, stop recording frames
-        if (!isRecording || isPlaying)
+        if (!isRecording)
             return;
 
         // Create new data frame, set frame number, position, and rotation
@@ -91,6 +114,11 @@ public class InputRecorder : MonoBehaviour
         frameDataList.Add(currentDataFrame);
         currentFrame++;
         return;
+    }
+
+    public void ToggleFileSwap()
+    {
+        currentFileToggle = !currentFileToggle;
     }
 
     // Save frame data for car
@@ -113,10 +141,10 @@ public class InputRecorder : MonoBehaviour
     // this is gonna be how it is -brandon
     private void SaveDataTestFunc(string mod, int caseIndex)
     {
-        File.WriteAllText(Application.dataPath + $"/{frameDataFolder}/frameData{mod}{caseIndex}.txt", string.Empty);
+        File.WriteAllText(Application.dataPath + $"/{frameDataFolder}/{filePrefix}_frameData{mod}{caseIndex}.txt", string.Empty);
 
         // Create streamwriter
-        StreamWriter streamWriter = new StreamWriter(Application.dataPath + $"/{frameDataFolder}/frameData{mod}{caseIndex}.txt");
+        StreamWriter streamWriter = new StreamWriter(Application.dataPath + $"/{frameDataFolder}/{filePrefix}_frameData{mod}{caseIndex}.txt");
 
         // Guard statement incase case index is invalid
         if (caseIndex < 0 || caseIndex > 7)
@@ -175,7 +203,7 @@ public class InputRecorder : MonoBehaviour
     private float[] LoadDataTestFunc(string mod, int caseIndex)
     {
         // Create streamreader at datapath for a given value
-        StreamReader streamReader = new StreamReader(Application.dataPath + $"/{frameDataFolder}/frameData{mod}{caseIndex}.txt");
+        StreamReader streamReader = new StreamReader(Application.dataPath + $"/{frameDataFolder}/{filePrefix}_frameData{mod}{caseIndex}.txt");
 
         // Split data by '_' seperator, create temp array for floats
         string[] tempInputStringArray = streamReader.ReadToEnd().Split('_');
@@ -233,6 +261,7 @@ public class InputRecorder : MonoBehaviour
         return loadedDataFrames;
     }
 }
+
 
 // DataFrame class
 // Holds frame number, interval of frames, position and rotation data.

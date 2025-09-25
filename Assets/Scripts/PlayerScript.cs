@@ -28,9 +28,7 @@ public class PlayerScript : MonoBehaviour
         // alongside this, trigger recorder trigger function and pathhelper trigger function
         if (other.gameObject.tag == "LapTrigger")
         {
-            gameManager.isLapTriggerBlocked = true;
-            gameManager.recorderInstance.TriggerProc();
-            gameManager.TriggerPathHelper();
+            gameManager.LapTriggerFunction();
         }
     }
 }

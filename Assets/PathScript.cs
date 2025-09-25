@@ -79,4 +79,13 @@ public class PathScript : MonoBehaviour
         lineRenderer.positionCount = framePositions.Count;
         areFramesPopulated = true;
     }
+
+    public void ResetPath()
+    {
+        isLoaded = false;
+        isLineDrawn = false;
+        areFramesPopulated = false;
+        framePositions.Clear();
+        frameDataList.Clear();
+    }
 }
