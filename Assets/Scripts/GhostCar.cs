@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Written by Brandon Callaway
-// To be added on whatever game object that represents the ghost car
-// TODO: CREATE BEHAVIOR FOR INTERACTING WITH THE PLAYER - WHILST MAINTAINING THE CORRECT FRAME INTERVAL POS/ROT DATA
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ HARD PART
 public class GhostCar : MonoBehaviour
 {
     public static GhostCar instance { get; private set; }
@@ -21,7 +18,13 @@ public class GhostCar : MonoBehaviour
     int interval = 6;
     int currentFrame = 0;
 
+    bool isTrackingPlayer = false;
+    public float trackDistance = 6.9f;
+    bool hasHitPlayer = false;
+
     Vector3 playerPosition = new Vector3();
+
+    BoxCollider bCollider;
 
     private void Awake()
     {
@@ -41,6 +44,7 @@ public class GhostCar : MonoBehaviour
     void Start()
     {
         interval = InputRecorder.instance.interval;
+        bCollider = GetComponent<BoxCollider>();
     }
 
     void Update()
@@ -60,6 +64,26 @@ public class GhostCar : MonoBehaviour
             IntervalUpdate();
         }
         //Debug.Log($"{playerPosition.x}, {playerPosition.y}");
+
+        if (Vector3.Distance(transform.position, playerPosition) <= trackDistance && !hasHitPlayer)
+        {
+            isTrackingPlayer = true;
+            transform.position = Vector3.Lerp(transform.position, playerPosition, 0.01f);
+            if (new Vector3(transform.position.x, transform.position.y, 0f) == new Vector3(playerPosition.x, playerPosition.y, 0f))
+            {
+                hasHitPlayer = true;
+            }
+        }
+        else
+        {
+            isTrackingPlayer = false;
+        }
+
+        if (hasHitPlayer)
+        {
+            isTrackingPlayer = false;
+        }
+        bCollider.enabled = isTrackingPlayer;
     }
 
     public void ReceivePlayerData(GameObject gObj)
@@ -71,7 +95,7 @@ public class GhostCar : MonoBehaviour
     {
 
         // Prevent index error
-        if (currentFrame < frameDataList.Count)
+        if (currentFrame < frameDataList.Count && !isTrackingPlayer)
         {
             // Update pos/rot data for ghost car
             transform.position = frameDataList[currentFrame].position;

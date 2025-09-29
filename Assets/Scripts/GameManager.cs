@@ -75,8 +75,6 @@ public class GameManager : MonoBehaviour
             ResetLap();
         }
 
-        
-
     }
 
     public void ResetLap()
