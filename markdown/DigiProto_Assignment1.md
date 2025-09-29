@@ -15,7 +15,7 @@
 > Trigger inputs act as independent controllers for the players movement
 
 # Team Roles
-> Dan: Unity working, 
+> Dan: Unity working, Asset sourcing, level creation
 > Evan: Unity working, 3DS Max asset creation/source
 > Noah: Non-code writing, LFS and release managment
 > Brandon: Code oversight/Management, commentator video
@@ -39,7 +39,7 @@
 1. Original plan to record player inputs and play back from file to move ghost car is too complex for the project. This has been resolved by storing position and rotation data for the player car in text files for ease of readability/modification
 2. Data storage for 8 different variables (Pos x, y, z. Rot x, y, z, w. Frame number) made parsing from a single text file difficult. This was resolved by, disgustingly and regrettably, saving each variable to its own text file and doing a single parse for each.
 3. Modification of ghost car pathing was hard to visualize. This was ammended by creating a path renderer for ease of development.
-
+4. Ghost char pathing created multiple issues, the largest of which is having the ghost car impact the player in a realistic way
 
 # Final Documentation Goals
 

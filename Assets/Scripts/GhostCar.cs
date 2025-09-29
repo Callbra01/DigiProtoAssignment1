@@ -68,7 +68,7 @@ public class GhostCar : MonoBehaviour
         if (Vector3.Distance(transform.position, playerPosition) <= trackDistance && !hasHitPlayer)
         {
             isTrackingPlayer = true;
-            transform.position = Vector3.Lerp(transform.position, playerPosition, 0.01f);
+            transform.position = Vector3.Lerp(new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(playerPosition.x, playerPosition.y, transform.position.z), 0.01f);
             if (new Vector3(transform.position.x, transform.position.y, 0f) == new Vector3(playerPosition.x, playerPosition.y, 0f))
             {
                 hasHitPlayer = true;
@@ -82,6 +82,7 @@ public class GhostCar : MonoBehaviour
         if (hasHitPlayer)
         {
             isTrackingPlayer = false;
+            hasHitPlayer = false;
         }
         bCollider.enabled = isTrackingPlayer;
     }
