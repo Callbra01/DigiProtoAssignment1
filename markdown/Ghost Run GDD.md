@@ -16,8 +16,11 @@ The experience that we are aiming for revolves around the player attempting to b
 
 ## Team Roles
 \- Dan: Unity working, Asset sourcing, level creation
+
 \- Evan: Unity working, 3DS Max asset creation/source
+
 \- Noah: Non-code writing, LFS and release management
+
 \- Brandon: Code oversight/Management, commentator video
 
 ## Mechanic Details
