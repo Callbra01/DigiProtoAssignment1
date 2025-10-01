@@ -17,7 +17,7 @@ The experience that we are aiming for revolves around the player attempting to b
 ## Team Roles
 \- Dan: Unity working, Asset sourcing, level creation
 
-\- Evan: Unity working, 3DS Max asset creation/source
+\- Evan: Unity working, Game Design Document Creation
 
 \- Noah: Non-code writing, LFS and release management
 
