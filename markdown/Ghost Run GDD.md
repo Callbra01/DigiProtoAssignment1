@@ -15,10 +15,10 @@ How competitive can a singleplayer time trail game be, when your best time can a
 The experience that we are aiming for revolves around the player attempting to beat their best time in a lap, despite the odds created by their best times' attempt to sabotage the player. The experimental aspect of the design is in the rudimentary AI that controls the time visualization car; Putting a competitive spin on the classic time trial feature, that is generally considered a tool for the player to beat their personal best times.
 
 ## Team Roles
-> Dan: Unity working, Asset sourcing, level creation
-> Evan: Unity working, 3DS Max asset creation/source
-> Noah: Non-code writing, LFS and release management
-> Brandon: Code oversight/Management, commentator video
+\- Dan: Unity working, Asset sourcing, level creation
+\- Evan: Unity working, 3DS Max asset creation/source
+\- Noah: Non-code writing, LFS and release management
+\- Brandon: Code oversight/Management, commentator video
 
 ## Mechanic Details
 
